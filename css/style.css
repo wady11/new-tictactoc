@@ -1,3 +1,16 @@
+/**GLOBAL STYLE**/
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	box-sizing: border-box;
+	background-color:white;
+}
+
+p {
+    text-align: center;
+}
 td {
 	border:  2px solid #333;
 	height:  100px;
@@ -14,8 +27,31 @@ table {
 	position: absolute;
 	left: 50%;
 	margin-left: -155px;
-	top: 50px;
+	top: 89px;
 }
+
+
+/**TITLE**/
+
+.reset {
+    text-align: center;
+}
+
+.modal-body {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: space-around;
+}
+button.reset-buttom {
+    width: 31px;
+    height: 25px;
+}
+i.fa.fa-power-off {
+    font-size: 20px;
+}
+
+/**BOX STYLE**/
 
 table tr:first-child td {
 	border-top: 0;

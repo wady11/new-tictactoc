@@ -1,38 +1,51 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
-  <meta charset="UTF-8">
-  <title>Tic Tac Toe</title>
-  
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe</title>
+    <!--main style-->
+    <link rel="stylesheet" href="/css/style.css">
+    <!--fontawesome-->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 </head>
 
 <body>
+    <div class="container">
+        <div class="modal-body">
+            <h3>Welcome to the Tic Tac Toe Game!</h3>
+            <p>It’s time to choose your figure.</p>
+            <p class="test"></p>
+            <div class="reset">
+                <button class="reset-buttom " onClick="startGame()"><i class="fa fa-power-off"></i></button>
+            </div>
+        </div>
+        <table>
+            <tr>
+                <td class="cell" id="0"></td>
+                <td class="cell" id="1"></td>
+                <td class="cell" id="2"></td>
+            </tr>
+            <tr>
+                <td class="cell" id="3"></td>
+                <td class="cell" id="4"></td>
+                <td class="cell" id="5"></td>
+            </tr>
+            <tr>
+                <td class="cell" id="6"></td>
+                <td class="cell" id="7"></td>
+                <td class="cell" id="8"></td>
+            </tr>
+        </table>
 
-	<table>
-		<tr>
-			<td class="cell" id="0"></td>
-			<td class="cell" id="1"></td>
-			<td class="cell" id="2"></td>
-		</tr>
-		<tr>
-			<td class="cell" id="3"></td>
-			<td class="cell" id="4"></td>
-			<td class="cell" id="5"></td>
-		</tr>
-		<tr>
-			<td class="cell" id="6"></td>
-			<td class="cell" id="7"></td>
-			<td class="cell" id="8"></td>
-		</tr>
-	</table>
-	<div class="endgame">
-		<div class="text"></div>
-	</div>
-	<button onClick="startGame()">Replay</button>
-
-  <script src="script.js"></script>
+        <div class="endgame">
+            <div class="text"></div>
+        </div>
+    </div>
+    <!--container's end-->
+    <script src="js/script.js"></script>
 </body>
+
 </html>
