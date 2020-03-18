@@ -20,7 +20,7 @@ const cells = document.querySelectorAll('.cell');
 //reset function
 function startGame() {
     document.querySelector('.endgame').style.display = 'none';
-    beginBoard = Array.from(Array(9).keys()); //this is a fance way to interact with array
+    beginBoard = Array.from(Array(9).keys()); //this is a fancy way to interact with array
     // console.log(beginBoard)
     for (let i = 0; i < cells.length; i++) {
         cells[i].innerHTML = "";
