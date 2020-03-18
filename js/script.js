@@ -18,34 +18,60 @@ const winCombos = [
 const cells = document.querySelectorAll('.cell');
 
 //reset function
-function startGame(){
+function startGame() {
     document.querySelector('.endgame').style.display = 'none';
-    beginBoard = Array.from(Array(9).keys());//fancy way to add and recorrer array
+    beginBoard = Array.from(Array(9).keys()); //this is a fance way to interact with array
     // console.log(beginBoard)
     for (let i = 0; i < cells.length; i++) {
         cells[i].innerHTML = "";
         cells[i].classList.remove('background-color');
-        cells[i].addEventListener('click',turnClick, false);
+        cells[i].addEventListener('click', turnClick, false);
     }
 }
 
 //collect and send info
-function turnClick(eventId){
+function turnClick(eventId) {
     turnCurrentNumber(eventId.target.id, humPlayer);
 }
 
 //currente id and player
-function turnCurrentNumber(id,player){
+function turnCurrentNumber(id, player) {
     beginBoard[id] = player;
-    document.getElementById(id).innerText = player
+    document.getElementById(id).innerText = player;
+    let gameWon = checkWin(beginBoard, player);
+    if (gameWon) gameOver(gameWon);
 }
 
+function checkWin(board, player) {
+    let plays = board.reduce((a, e, i) =>
+        (e === player) ? a.concat(i) : a, []);
+    let gameWon = null;
 
+    for (let [index, win] of winCombos.entries()) {
+        if (win.every(elem => plays.indexOf(elem > -1))) {
+            gameWon = {
+                index: index,
+                player: player
+            }
+            break;
+        }
+    }
 
+    return gameWon;
+}
 
+function gameOver(gameWon) {
+    for (let index of winCombos[gameWon.index]) {
+        document.getElementById(index).style.backgroundColor =
+            gameWon.player == humPlayer ? 'blue' : 'red';
+    }
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].removeEventListener('click', turnClick, false);
+    }
+}
 
 //DOCUMENT LOADED
-window.addEventListener('load',()=>{
+window.addEventListener('load', () => {
     startGame();
-    
+
 })
