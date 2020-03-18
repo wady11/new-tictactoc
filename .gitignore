@@ -26,5 +26,16 @@ Temporary Items
 .apdisk
 
 
+
 notable/node_modules
 Node-web-scraping/node_modules
+
+#ignore files
+img/
+
+
+*.txt
+*.md
+*.xml
+*.png
+*.icon
