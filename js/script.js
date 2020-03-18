@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
+ 
 //variables
-
 var beginBoard;
 const humPlayer = 'o';
 const aiPlayer = 'x';
@@ -31,7 +31,11 @@ function startGame() {
 
 //collect and send info
 function turnClick(eventId) {
-    turnCurrentNumber(eventId.target.id, humPlayer);
+    if (typeof beginBoard[eventId.target.id] == 'number') {
+        turnCurrentNumber(eventId.target.id, humPlayer);
+        if (!checkTie()) turnCurrentNumber(bestSpot(), aiPlayer);
+    }
+
 }
 
 //currente id and player
@@ -41,7 +45,6 @@ function turnCurrentNumber(id, player) {
     let gameWon = checkWin(beginBoard, player);
     if (gameWon) gameOver(gameWon);
 }
-
 
 //check who win function
 function checkWin(board, player) {
@@ -71,6 +74,98 @@ function gameOver(gameWon) {
     for (let i = 0; i < cells.length; i++) {
         cells[i].removeEventListener('click', turnClick, false);
     }
+    declareWinner(gameWon.player == humPlayer ? 'you win!' : 'you lose!')
+}
+
+function declareWinner(who) {
+    document.querySelector('.endgame').style.display = 'block';
+    document.querySelector('.endgame .text').innerText = who;
+}
+
+function emptySquare() {
+    return beginBoard.filter(s => typeof s == 'number');
+}
+
+function bestSpot() {
+    return minimax(beginBoard, aiPlayer).index;
+}
+
+function checkTie() {
+    if (emptySquare().length == 0) {
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].style.backgroundColor = 'green';
+            cells[i].addEventListener('click', turnClick, false)
+        }
+        declareWinner('Tie Game');
+        return true;
+    }
+    return false;
+
+}
+
+//calculate each move
+function machineMoves(newBoard, availSpots, player) {
+    var moves = [];
+    for (let i = 0; i < availSpots.length; i++) {
+        var move = {};
+        move.index = newBoard[availSpots[i]];
+        newBoard[availSpots[i]] = player
+
+        if (player == aiPlayer) {
+            let result = minimax(newBoard, humPlayer);
+            move.score = result.score;
+        } else {
+            let result = minimax(newBoard, aiPlayer);
+            move.score = result.score;
+        }
+        newBoard[availSpots[i]] = move.index;
+
+        moves.push(move);
+    }
+
+    return moves;
+}
+
+//calculte de score
+function minimax(newBoard, player) {
+    var availSpots = emptySquare(newBoard);
+    if (checkWin(newBoard, player)) {
+        return {
+            score: -10
+        };
+    } else if (checkWin(newBoard, aiPlayer)) {
+        return {
+            score: 20
+        }
+    } else if (availSpots.length === 0) {
+        return {
+            score: 0
+        };
+    }
+
+    
+    let machineMoverVariable = machineMoves(newBoard, availSpots, player);
+
+    var bestMove;
+    if (player === aiPlayer) {
+        var bestScore = -100;
+        for (let i = 0; i < machineMoverVariable.length; i++) {
+            if (machineMoverVariable[i].score > bestScore) {
+                bestScore = machineMoverVariable[i].score;
+                bestMove = i;
+            }
+        }
+    } else {
+        var bestScore = 100;
+        for (let i = 0; i < machineMoverVariable.length; i++) {
+            if (machineMoverVariable[i].score < bestScore) {
+                bestScore = machineMoverVariable[i].score;
+                bestMove = i;
+            }
+        }
+    }
+
+    return machineMoverVariable[bestMove];
 }
 
 //DOCUMENT LOADED
