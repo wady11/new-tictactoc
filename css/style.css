@@ -140,6 +140,18 @@ table {
 
 
 /**TITLE**/
+.turntable {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+i.fa.fa-user {
+    font-size: 26px;
+}
+
+i.fa.fa-android {
+    font-size: 26px;
+}
 
 .reset {
     text-align: center;

@@ -4,6 +4,8 @@
 var beginBoard;
 const humPlayer = 'o';
 const aiPlayer = 'x';
+const userPlayer = document.getElementById('user');
+const computerPlayer = document.getElementById('computer');
 
 const winCombos = [
     [0, 1, 2],
@@ -12,20 +14,21 @@ const winCombos = [
     [0, 3, 6],
     [1, 4, 7],
     [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
+    [8, 4, 0],
+    [6, 4, 2]
 ]
 const cells = document.querySelectorAll('.cell');
 
 //reset function
 function startGame() {
     document.querySelector('.endgame').style.display = 'none';
+    userPlayer.style.color = "red"
     beginBoard = Array.from(Array(9).keys()); //this is a fancy way to interact with array
     // console.log(beginBoard)
     for (let i = 0; i < cells.length; i++) {
         cells[i].innerHTML = "";
         cells[i].removeAttribute('style')
-        cells[i].addEventListener('click', turnClick, false);
+        cells[i].addEventListener('click', turnClick);
     }
 }
 
@@ -41,7 +44,25 @@ function turnClick(eventId) {
 //currente id and player
 function turnCurrentNumber(id, player) {
     beginBoard[id] = player;
-    document.getElementById(id).innerText = player;
+    if (player == 'o'){
+        document.getElementById(id).innerText = player;
+        userPlayer.style.color = "red";
+        computerPlayer.style.color = 'black';
+    }else{
+        setTimeout(() => {
+            document.getElementById(id).innerText = player;
+            computerPlayer.style.color = "red";
+            userPlayer.style.color = 'black';
+            setTimeout(() => {
+                userPlayer.style.color = "red";
+                computerPlayer.style.color = 'black'    
+            },500);
+            
+        },2000);
+         
+    }
+   
+    
     let gameWon = checkWin(beginBoard, player);
     if (gameWon) gameOver(gameWon);
 }
