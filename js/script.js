@@ -78,6 +78,7 @@ function gameOver(gameWon) {
 }
 
 function declareWinner(who) {
+    console.log(who)
     document.querySelector('.endgame').style.display = 'block';
     document.querySelector('.endgame .text').innerText = who;
 }
@@ -92,11 +93,14 @@ function bestSpot() {
 
 function checkTie() {
     if (emptySquare().length == 0) {
+        let movement = 0;
         for (var i = 0; i < cells.length; i++) {
             cells[i].style.backgroundColor = 'green';
             cells[i].addEventListener('click', turnClick, false)
+            movement++;
         }
-        declareWinner('Tie Game');
+         declareWinner('Tie Game');
+               
         return true;
     }
     return false;
